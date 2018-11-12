@@ -1,24 +1,4 @@
-# 학술제
-
-
-**각자 branch 꼭 생성해주세요. 본인의 branch에 fetch 및 commit을 합니다 **
-
-프로젝트 시작 전, 본인 branch fetch해서 동기화 해주고
-
-일정량 개발을 마치면 본인 branch에 commit하면 됩니다. 
-
-#### **주의 :: 다른 branch를 fetch하면 파일이 사라질 수 있으니 주의해주세요**
-
-
-
-모든 개발이 완료되면 New pull request(깃허브 사이트에 있으니 참고) 를 합니다.
-
-base는 병합되어지는 대상(기본적으로 master), compare은 <개발완료한 브랜치> 가 됩니다.
-
-
-
-최종 pull request 승인은 모두가 확인 후에, 승인하는 것으로 하겠습니다. 
-
+# 음성명령 제어 '따라와'
 
 
  # 프로젝트 구조
@@ -72,7 +52,60 @@ base는 병합되어지는 대상(기본적으로 master), compare은 <개발완
 > 프로젝트 개발에 사용되는 폴더는 아닙니다.
 
 
-참고하기 좋은 문서들
+
+
+
+----
+
+### Assistant
+
+**environment**
+
+* Python
+* Google Assistant SDK
+* Linux based on Debian
+
+> 프로젝트 운영체제로 Debian 계열 raspbian 기준에서 설치하였으나,
+>
+> 운영체제 상관없이 동작 가능합니다.
+
+```bash
+sudo apt-get install portaudio19-dev libffi-dev libssl-dev libmpg123-dev
+```
+
+```bash
+python -m pip install --upgrade google-assistant-library
+```
+
+```bash
+python -m pip install --upgrade google-assistant-sdk[samples]
+```
+
+
+
+`credentials` 생성위한 환경 설치 및 `client*.json` 발급
+
+```bash
+python -m pip install --upgrade google-auth-oauthlib[tool]
+```
+
+```bash
+google-oauthlib-tool --scope https://www.googleapis.com/auth/assistant-sdk-prototype --scope https://www.googleapis.com/auth/gcm --save --headless --client-secrets /path/to/client_secret_client-id.json
+```
+
+[구글 어시스턴트 SDK 문서 참고](https://developers.google.com/assistant/sdk/guides/library/python/embed/install-sample)
+
+
+
+-----
+
+
+
+
+
+
+
+공부하면서 참고하기 좋은 문서들
 
 * [Flask](https://mooneegee.blogspot.com/2017/10/python-flask.html)
 * [Python3](https://wikidocs.net/book/1)
@@ -84,3 +117,26 @@ base는 병합되어지는 대상(기본적으로 master), compare은 <개발완
 * [BootStrap](http://getbootstrap.com/docs/4.1/getting-started/introduction/)
 * jinja2   [문서1](http://jinja.pocoo.org/docs/2.10/templates/) [문서2](http://flask.pocoo.org/docs/1.0/templating/)
 * [Rachet](http://goratchet.com/components/)
+
+
+
+
+
+> 이외의 라이브러리들은 본인이 필요하다고 생각하면 자유롭게 써보도록 해요. 
+>
+> 좋은 라이브러리가 있다면 공유해주세요
+
+
+
+
+
+
+
+| 이름   | 담당                        | 비고 |
+| ------ | --------------------------- | ---- |
+| 노아론 | 어시스턴트                  |      |
+| 장수경 | 서버 - A파트                |      |
+| 허승은 | 서버 - B파트                |      |
+| 이새하 | 아두이노                    |      |
+| 전승현 | 서버-아두이노 간 시리얼통신 |      |
+
