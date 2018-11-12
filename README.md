@@ -1,46 +1,105 @@
-# 학술제
+# 음성명령 제어 '따라와'
+
+
+ # 프로젝트 구조
+
+- Aserver
+  - app.py
+  - templates
+  - css
+- Bserver
+  - app.py
+  - csss
+- img
+- raspToSerial
+- serialToArduino
+- Assistant
+  - assistant.py
+
+**Aserver**
+
+> A라즈베리파이의 서버 폴더입니다.
+
+
+
+**Bserver**
+
+> B라즈베리파이의 서버 폴더입니다.
+
+
+
+**Assistant**
+> 구글 어시스턴트 폴더입니다.
+
+
+
+**raspToSerial**
+> 시리얼 파트 폴더입니다.
+
+
+
+**serialToArduino**
+> 아두이노 파트 폴더입니다.
+> 아두이노 자체에 업로드하지만, 명시적으로 모두가 볼 수 있게하고자,
+> 이 폴더에 업로드하면 됩니다.
+
+
+
+**img**
+
+> 설계디자인을 저장해둔 폴더입니다.
+>
+> 프로젝트 개발에 사용되는 폴더는 아닙니다.
 
 
 
 
 
-주제 :  10월10일에 정합시다. 모두들 좋은 주제(**본인이 하고싶은, 끌리는 주제**) 가져와서 회의합시다.
+----
+
+### Assistant
+
+**environment**
+
+* Python
+* Google Assistant SDK
+* Linux based on Debian
+
+> 프로젝트 운영체제로 Debian 계열 raspbian 기준에서 설치하였으나,
+>
+> 운영체제 상관없이 동작 가능합니다.
+
+```bash
+sudo apt-get install portaudio19-dev libffi-dev libssl-dev libmpg123-dev
+```
+
+```bash
+python -m pip install --upgrade google-assistant-library
+```
+
+```bash
+python -m pip install --upgrade google-assistant-sdk[samples]
+```
 
 
 
-플랫폼 : 웹(모바일)
+`credentials` 생성위한 환경 설치 및 `client*.json` 발급
 
-### 필요 기술
+```bash
+python -m pip install --upgrade google-auth-oauthlib[tool]
+```
 
-서버 파트 : Python3 + Flask,  MySQL(**PyMySQL**라이브러리)
+```bash
+google-oauthlib-tool --scope https://www.googleapis.com/auth/assistant-sdk-prototype --scope https://www.googleapis.com/auth/gcm --save --headless --client-secrets /path/to/client_secret_client-id.json
+```
 
-서버 파트 Python3 모듈 : [ **requests, BeautifulSoup4, json, Flask, PyMySQL** ]
-
-카메라를 사용하는 프로젝트 경우, openCV 이용합니다. 
-
-
-
-프론트엔드 파트 :  **HTML, Bootsrap(CSS), javascript + Ratchet, jinja2**
+[구글 어시스턴트 SDK 문서 참고](https://developers.google.com/assistant/sdk/guides/library/python/embed/install-sample)
 
 
 
-------
-
-Flask : 파이썬 웹 개발 프레임워크 ; 웹서버를 만들때 쓰입니다.
-
-MySQL : 데이터베이스 ; 정보들을 기록하고 불러올때 쓰입니다. 프로그래밍 기초때 배우는`텍스트파일에 적고 불러오기 기능` 대신 쓰인다고 보면 됩니다. 우리는 파이썬을 이용하므로 PyMySQL 라이브러리를 사용합니다.
-
-requests : 외부와 통신을 할때 쓰입니다. HTTP프로토콜을 사용하기에 GET POST DELETE UPDATE 기능이 있습니다. ; 아래 BeautifulSoup4 내용에서 한번 더 참고하시면 됩니다.
-
-BeautifulSoup4 :주로  requests라이브러리와 함께 쓰이며 크롤러를 만들 때 대표적으로 사용합니다. `requests`로 인터넷 사이트의 HTML 소스를 가져오고 `BeautifulSoup4`로 원하는 내용만 골라냅니다.
-
-json : `.txt` `.hwp` 와 같은 파일 형식입니다. 인터넷에 requests로 정보를 보낼 때, 함께 보냅니다. rest-api에서 주로 쓰는 파일 형식입니다. json은 어떻게 작성되는지 숙지하시면 됩니다. (파이썬 딕셔너리와 유사해요)
+-----
 
 
-
-jinja2 : 템플릿 엔진입니다. Flask와 결합해 보다 동적으로 쓸 수 있게 해줍니다.(HTML에서 for문을 쓰거나 서버에서 변수를 가져와 표시하거나)
-
-Rahchet : 모바일에서 앱처럼 볼 수 있게 해주는 자바스크립트의 라이브러리입니다.
 
 
 
@@ -73,11 +132,11 @@ Rahchet : 모바일에서 앱처럼 볼 수 있게 해주는 자바스크립트�
 
 
 
-| 이름   | 담당 | 비고 |
-| ------ | ---- | ---- |
-| 노아론 |      |      |
-| 장수경 |      |      |
-| 허승은 |      |      |
-| 이새하 |      |      |
-| 전승현 |      |      |
+| 이름   | 담당                        | 비고 |
+| ------ | --------------------------- | ---- |
+| 노아론 | 어시스턴트                  |      |
+| 장수경 | 서버 - A파트                |      |
+| 허승은 | 서버 - B파트                |      |
+| 이새하 | 아두이노                    |      |
+| 전승현 | 서버-아두이노 간 시리얼통신 |      |
 
