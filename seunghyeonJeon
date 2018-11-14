@@ -1,0 +1,46 @@
+from time import sleep
+import serial
+import requests
+from flask import Flask
+
+class Connector:
+
+
+    def __init__(self):
+        try:
+            self.ser = serial.Serial("/dev/ttyACM0", 9600)
+        except:
+            HaveError = {'word': 'Error!!!!', 'code_num': 444}
+            res = requests.post('CheckingURL', HaveError) # 이건 생성자
+
+
+    def serial_connect(self, car_move): # 이게 서버쪽에서 받아야하는 코드 딕셔너리 처리해서 직접 받게하는거
+        try:
+        car_move_num = {306: 'b',
+                        312:'f',
+                        303: "l",
+                        309: "r",
+                        301: "1",
+                        302: "2",
+                        304: "4",
+                        305: "5",
+                        307: "7",
+                        308: "8",
+                        310: "10",
+                        311= "11"}
+
+        new_car_move=car_move_num[car_move]
+
+        self.ser.write(str(chr(new_car_move)))
+        
+        except:
+            HaveError = {'word': 'Error!!!!', 'code_num': 444}
+            res = requests.post('CheckingURL', HaveError) #내가 처리하는 거에서 에러나면 post 해주겠다는 거고
+
+
+    def arduino_To_server(self): #아두이노에서 오는 코드 다 보내주는거야
+        if self.ser.readable():
+            res = self.ser.readline()
+            res = requests.post('CheckingURL', res.decode()[:len(res)-1]) #이게 아두이노에서 오는 코드 post 해주는거고 수경이한테 보내주면돼
+
+    
