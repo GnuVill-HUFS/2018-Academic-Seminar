@@ -1,7 +1,5 @@
-from time import sleep
 import serial
 import requests
-from flask import Flask
 
 class Connector:
 
