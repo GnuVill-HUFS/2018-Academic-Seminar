@@ -1,20 +1,24 @@
 from flask import Flask,render_template
 import requests
+import json
+from flask import request
 
 app = Flask(__name__)
 
 @app.route('/aaron', methods=['POST'])
-def A_rasp(aaron_num, aaron_str):
+def A_rasp():
     try:
-        name = {'word':aaron_str, 'code_num': aaron_num}
-        res = requests.post('URL', data = aaron_num)
+        data = json.loads(request.data)
+        res = requests.post('http://localhost:7777/bbb', data = json.dumps(data))
+        return json.dumps(data)
     except:
-        HaveError = {'word':'Error!!!!', 'code_num': 555}
-        return render_template(우영.html, names=HaveError)
+        HaveError = {'word':'Error!!!!', 'code_num': 312}
+        return render_template('woo.html', names=HaveError)
 
 @app.route('/checking',methods=['POST'])
-def Check(back):
-    return render_template(우영.html, names=back)
+def Check():
+    back = request.data
+    return render_template('woo.html', names=back)
 
 if __name__ ==  '__main__':
-    app.run()
+    app.run(host='localhost',port='8888', debug=True)
