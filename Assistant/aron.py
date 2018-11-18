@@ -10,7 +10,6 @@ def assist_A():
     data = {"code_num": 312}
     print("AA")
     res = requests.post(assist_URL, data=json.dumps(data))
-    print(res.data)
     print(res.text)
 
 
@@ -25,8 +24,8 @@ def bToSerial():
 
     data = {"code_num": 312}
 
-    res = requests.post(bToSerial_URL, data=json.dumps(data))
-    print(res.text)
+    requests.post(bToSerial_URL, data=json.dumps(data))
+    #print(res.text)
 
 if __name__ == "__main__":
     print("choose COMMAND")

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import requests
 import json
+from raspToSerial.haksuljae import Connector as ard_cn
 #from templates import Connector
 
 app = Flask(__name__)
@@ -12,9 +13,12 @@ def B_rasp():
     if request.method == 'POST':
         try:
             data = json.loads(request.data)
-            return json.dumps(data)
-        #Connector.serial_connection(dataDict["code_num"])
-        #시리얼 제작 후, 처리
+
+            ard_connectVal = ard_cn()
+            result = ard_connectVal.serial_connection(data['code_num'])
+            # bbb로 넘어오면 서버가 serial 연결.
+            return result
+
         except:
             HaveError = {'code_num': 555}
             res = requests.post('http://localhost:3333/checking', json.dumps(HaveError))

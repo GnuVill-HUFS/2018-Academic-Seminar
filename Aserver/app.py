@@ -12,7 +12,7 @@ def A_rasp():
         try:
             data = json.loads(request.data)#푸는것
             res = requests.post('http://localhost:4444/bbb', data = json.dumps(data))
-            return json.dumps(data)
+            return res.text
         except:
             HaveError = {'code_num': 312}
             #file_path = 'woo.html'
@@ -23,26 +23,24 @@ def A_rasp():
 def Check():
     if request.method == 'POST':
         back = json.loads(request.data)
-        res = requests.post('http://localhost:3333/save', data=json.dumps(back))
+        requests.post('http://localhost:3333/save', data=json.dumps(back))
         #return render_template('woo.html', names = back)
-        return res.text
 
     elif request.method == 'GET':
         data = request.args.get('code_num')
         #word = data['word']
-        return webbrowser.open('http://localhost:3333/save?name=1&code_num='+str(data))
+        return webbrowser.open('http://localhost:3333/save?code_num='+str(data))
 
 @app.route('/save', methods = ['GET','POST'])
 def save():
     if request.method == 'POST':
         back = json.loads(request.data)
-        res = requests.get('http://localhost:3333/checking', params=back)
-        return res.text
+        requests.get('http://localhost:3333/checking', params=back)
 
     elif request.method=='GET':
         code_num = request.args.get('code_num')
         #return str(code_num)
-        return render_template('woo.html', code_num = str(code_num))
+        return render_template('woo.html', code_num=str(code_num))
 
 
 if __name__ ==  '__main__':
