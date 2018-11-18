@@ -1,9 +1,9 @@
 import requests, json
 from flask import jsonify
 
-assist_URL = 'http://localhost:3333/aaron'
-serial_URL = 'http://localhost:3333/checking'
-bToSerial_URL = 'http://localhost:4444/bbb'
+assist_URL = 'http://192.168.0.2:3333/aaron'
+serial_URL = 'http://192.168.0.2:3333/checking'
+bToSerial_URL = 'http://192.168.0.5:4444/bbb'
 
 def assist_A():
 

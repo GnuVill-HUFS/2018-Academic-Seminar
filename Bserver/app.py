@@ -4,6 +4,9 @@ import json
 from raspToSerial.haksuljae import Connector as ard_cn
 #from templates import Connector
 
+A_SERVER = 'http://192.168.0.4:3333'
+B_SERVER = 'http://192.168.0.5:4444'
+
 app = Flask(__name__)
 
 #direction_code = requests.post('http://localhost:7777','303')
@@ -21,7 +24,7 @@ def B_rasp():
 
         except:
             HaveError = {'code_num': 555}
-            res = requests.post('http://localhost:3333/checking', json.dumps(HaveError))
+            res = requests.post(A_SERVER + '/checking', json.dumps(HaveError))
             return HaveError['code_num']
     else:
         return "THIS IS GET"

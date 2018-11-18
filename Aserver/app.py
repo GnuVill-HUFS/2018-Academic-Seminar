@@ -4,6 +4,9 @@ from flask import request
 import os
 from urllib.parse import urljoin
 
+A_SERVER = 'http://192.168.0.2:3333'
+B_SERVER = 'http://192.168.0.5:4444'
+
 app = Flask(__name__, static_url_path='/static')
 
 @app.route('/aaron', methods=['POST','GET'])
@@ -11,7 +14,7 @@ def A_rasp():
     if request.method == 'POST':
         try:
             data = json.loads(request.data)#푸는것
-            res = requests.post('http://localhost:4444/bbb', data = json.dumps(data))
+            res = requests.post(B_SERVER + '/bbb', data = json.dumps(data))
             return res.text
         except:
             HaveError = {'code_num': 312}
@@ -23,19 +26,19 @@ def A_rasp():
 def Check():
     if request.method == 'POST':
         back = json.loads(request.data)
-        requests.post('http://localhost:3333/save', data=json.dumps(back))
+        requests.post(A_SERVER + '/save', data=json.dumps(back))
         #return render_template('woo.html', names = back)
 
     elif request.method == 'GET':
         data = request.args.get('code_num')
         #word = data['word']
-        return webbrowser.open('http://localhost:3333/save?code_num='+str(data))
+        return webbrowser.open(A_SERVER + '/save?code_num='+str(data))
 
 @app.route('/save', methods = ['GET','POST'])
 def save():
     if request.method == 'POST':
         back = json.loads(request.data)
-        requests.get('http://localhost:3333/checking', params=back)
+        requests.get(A_SERVER + '/checking', params=back)
 
     elif request.method=='GET':
         code_num = request.args.get('code_num')
