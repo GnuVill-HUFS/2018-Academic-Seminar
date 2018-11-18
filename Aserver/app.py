@@ -4,7 +4,7 @@ from flask import request
 import os
 from urllib.parse import urljoin
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 @app.route('/aaron', methods=['POST','GET'])
 def A_rasp():
@@ -46,4 +46,4 @@ def save():
 
 
 if __name__ ==  '__main__':
-    app.run(host='localhost',port='3333', debug=False)
+    app.run(host='0.0.0.0', port='3333', debug=False)

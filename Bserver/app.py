@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import requests
 import json
-from templates import Connector
+#from templates import Connector
 
 app = Flask(__name__)
 
@@ -20,4 +20,4 @@ def B_rasp():
             return HaveError['code_num']
 
 if __name__ == '__main__':
-    app.run(host='localhost', port='4444', debug = False)
+    app.run(host='0.0.0.0', port='4444', debug = False)
