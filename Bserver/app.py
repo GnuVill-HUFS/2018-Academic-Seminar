@@ -18,9 +18,9 @@ def B_rasp():
             data = json.loads(request.data)
 
             ard_connectVal = ard_cn()
-            result = ard_connectVal.serial_connection(data['code_num'])
+            ard_connectVal.serial_connection(data['code_num'])
             # bbb로 넘어오면 서버가 serial 연결.
-            return result
+            return "DONE"
 
         except:
             HaveError = {'code_num': 555}

@@ -14,13 +14,13 @@ def A_rasp():
     if request.method == 'POST':
         try:
             data = json.loads(request.data)#푸는것
+            print("AAA")
             res = requests.post(B_SERVER + '/bbb', data = json.dumps(data))
-            return res.text
         except:
             HaveError = {'code_num': 312}
             #file_path = 'woo.html'
             #file_path = urljoin('file://'.os.path.abspath(file_path))
-            return render_template('woo.html', names=HaveError)
+            return "ERR1111"
 
 @app.route('/checking',methods=['POST','GET'])
 def Check():

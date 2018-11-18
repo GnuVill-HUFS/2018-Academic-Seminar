@@ -7,7 +7,7 @@ bToSerial_URL = 'http://192.168.0.5:4444/bbb'
 
 def assist_A():
 
-    data = {"code_num": 312}
+    data = {"code_num": 306}
     print("AA")
     res = requests.post(assist_URL, data=json.dumps(data))
     print(res.text)
