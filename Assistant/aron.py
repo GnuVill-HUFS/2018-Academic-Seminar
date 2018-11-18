@@ -1,30 +1,30 @@
 import requests, json
 from flask import jsonify
 
-assist_URL = 'http://localhost:8888/aaron'
-serial_URL = 'http://localhost:8888/checking'
-bToSerial_URL = 'http://localhost:7777/bbb'
+assist_URL = 'http://localhost:3333/aaron'
+serial_URL = 'http://localhost:3333/checking'
+bToSerial_URL = 'http://localhost:4444/bbb'
 
 def assist_A():
 
     data = {"word": "TEST_script","code_num": 312}
 
     res = requests.post(assist_URL, data=json.dumps(data))
-    print(res)
+    print(res.text)
 
 
 def serial_A():
 
-    data = {"word": "Serial", "code_num": 112}
+    data = {"word": "Serial", "code_num": 312}
 
-    res = requests.post(serial_URL, data=jsonify(data))
-    print(res)
+    res = requests.post(serial_URL, data=json.dumps(data))
+    print(res.text)
 
 def bToSerial():
 
     data = {"code_num": 312}
 
-    res = requests.post(bToSerial_URL, json=json.dumps(data))
+    res = requests.post(bToSerial_URL, data=json.dumps(data))
     print(res.text)
 
 if __name__ == "__main__":
