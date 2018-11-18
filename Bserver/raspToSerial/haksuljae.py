@@ -3,6 +3,7 @@ import json
 import requests
 
 COM_NO = 'COM3'
+A_URL = 'http://localhost:3333'
 
 class Connector:
 
@@ -11,7 +12,7 @@ class Connector:
             self.ser = serial.Serial(COM_NO, 9600)
         except:
             have_error = {'code_num': 444}
-            requests.post('http://localhost:3333/checking', json.dumps(have_error))
+            requests.post( A_URL + '/checking', json.dumps(have_error))
 
     def serial_connection(self, car_move):
         try:
@@ -22,12 +23,12 @@ class Connector:
             data = self.ser.readline()
 
             json_data = {'code_num': int(data)}
-            requests.post('http://localhost:3333/cheking', json.dumps(json_data))
+            requests.post(A_URL + '/cheking', json.dumps(json_data))
 
             return "SER"
         except:
             have_error = {'code_num': 444}
-            requests.post('http://localhost:3333/checking', json.dumps(have_error))
+            requests.post(A_URL + '/checking', json.dumps(have_error))
             return "DONE"
 
 

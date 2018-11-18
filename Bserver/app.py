@@ -4,7 +4,7 @@ import json
 from raspToSerial.haksuljae import Connector as ard_cn
 #from templates import Connector
 
-A_SERVER = 'http://192.168.0.4:3333'
+A_SERVER = 'http://192.168.0.2:3333'
 B_SERVER = 'http://192.168.0.5:4444'
 
 app = Flask(__name__)
