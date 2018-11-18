@@ -7,16 +7,17 @@ app = Flask(__name__)
 
 #direction_code = requests.post('http://localhost:7777','303')
 
-@app.route('/bbb', methods=['POST'])
+@app.route('/bbb', methods=['POST','GET'])
 def B_rasp():
-    try:
-        dataDict = json.loads(request.data)
-        return str(dataDict)
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.data)
+            return json.dumps(data)
         #Connector.serial_connection(dataDict["code_num"])
-    except:
-        HaveError = {'word':'Error!!!!', 'code_num': 555}
-        res = requests.post('http://localhost:8888/checking', HaveError)
-        return HaveError['word']
+        except:
+            HaveError = {'code_num': 555}
+            res = requests.post('http://localhost:3333/checking', json.dumps(HaveError))
+            return HaveError['code_num']
 
 if __name__ == '__main__':
-    app.run(host='localhost', port='7777', debug = True)
+    app.run(host='localhost', port='4444', debug = False)
