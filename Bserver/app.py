@@ -14,10 +14,13 @@ def B_rasp():
             data = json.loads(request.data)
             return json.dumps(data)
         #Connector.serial_connection(dataDict["code_num"])
+        #시리얼 제작 후, 처리
         except:
             HaveError = {'code_num': 555}
             res = requests.post('http://localhost:3333/checking', json.dumps(HaveError))
             return HaveError['code_num']
+    else:
+        return "THIS IS GET"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='4444', debug = False)
