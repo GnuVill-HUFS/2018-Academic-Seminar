@@ -4,8 +4,8 @@ from flask import request
 import os
 from urllib.parse import urljoin
 
-A_SERVER = 'http://192.168.0.2:3333'
-B_SERVER = 'http://192.168.0.5:4444'
+A_SERVER = 'http://192.168.1.4:3333'
+B_SERVER = 'http://192.168.1.5:4444'
 
 app = Flask(__name__, static_url_path='/static')
 

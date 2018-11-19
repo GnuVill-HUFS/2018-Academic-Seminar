@@ -5,9 +5,10 @@ const int RIGHT_A =6;
 const int RIGHT_B =7;
 const int EN_R    =9;//right motor pwm
 
+//int buffPos; //버퍼에 기록할 위치
+
 void setup() {
   Serial.begin(9600); //시리얼모니터 송신
-  Serial.println("Start UART test"); //pc의 시리얼 모니터에 표시
 
   //모터 핀모드 설정
   pinMode(EN_L, OUTPUT);
@@ -16,91 +17,86 @@ void setup() {
   pinMode(LEFT_B, OUTPUT);
   pinMode(RIGHT_A, OUTPUT);
   pinMode(RIGHT_B, OUTPUT);
- // pinMode(LEFT_A, HIGH);
- // pinMode(LEFT_B, HIGH);
- // pinMode(RIGHT_A, HIGH);
- // pinMode(RIGHT_B, HIGH);
-  Serial.print("pin ok");
+
+  Serial.print("direction =");
 }
-//pyserial로 부터 상태코드 전달 받기..car_move상태코드 구현
 void loop() {
-  //라즈베리 파이에서 넘어온 데이터가 있으면 PC로 넘겨줍니다.
  char read_data;
+ read_data = Serial.read();
+ //Serial.println(read_data);
+
  if(Serial.available()) {
-    read_data = Serial.read();
-    Serial.print(read_data);
- 
-      if( read_data == 'f') {    
+//f b l r 1 2 4 5 7 8 A B
+      if( read_data == 'f') {
         forward();
-        Serial.print("direction = ");
-        Serial.println("312"); //forward
-        } 
+        reset();
+        Serial.println(" 312");
+        }
         if(read_data == 'b') {
           backward();
-          Serial.print("direction = ");
-          Serial.println("306"); //backward
-        } 
+          reset();
+          Serial.println(" 306");
+        }
         if(read_data == 'l') {
           left();
-          Serial.print("direction = ");
-          Serial.println("309");
-        } 
+          reset();
+          Serial.println(" 309");
+        }
         if(read_data == 'r') {
           right();
-          Serial.print("direction = ");
-          Serial.println("303");
+          reset();
+          Serial.println(" 303");
         }
         if(read_data == '1'){
           forward_right();
-          Serial.print("direction = ");
-          Serial.println("301");
-        } 
+          reset();
+          Serial.println(" 301");
+        }
         if(read_data == '2'){
-          forward_right();
-          Serial.print("direction = ");
-          Serial.println("302");
-        } 
+          right_forward();
+          reset();
+          Serial.println(" 302");
+        }
         if(read_data == '4'){
-          backward_right();
-          Serial.print("direction = ");
-          Serial.println("304");
-        } 
+          right_backward();
+          reset();
+          Serial.println(" 304");
+        }
         if(read_data == '5'){
           backward_right();
-          Serial.print("direction = ");
-          Serial.println("305");
-        } 
+          reset();
+          Serial.print(" 305");
+        }
         if(read_data == '7'){
           backward_left();
-          Serial.print("direction = ");
-          Serial.println("307");
-        } 
+          reset();
+          Serial.print(" 307");
+        }
         if(read_data == '8'){
-          backward_left();
-          Serial.print("direction = ");
-          Serial.println("308");
-        } 
+          left_backward();
+          reset();
+          Serial.print(" 308");
+        }
         if(read_data == 'A'){
-          forward_left();
-          Serial.print("direction = ");
-          Serial.println("310");
-        } 
+          left_forward();
+          reset();
+          Serial.print(" 310");
+        }
         if(read_data == 'B'){
           forward_left();
-          Serial.print("direction = ");
-          Serial.println("311");
-        } 
-        else{
+          reset();
+          Serial.print(" 311");
+        }
+        if(read_data =='N'){
           stop();
-          Serial.print("direction = ");
-          Serial.println("stop");
+          Serial.println(" stop");
         }
+        /*else {
+          Serial.print("666");
+          delay(2000);
+        }*/
       }
-      else{
-        Serial.println("666");
-        }
       delay(20);
-     
 }
 
 void forward() {
@@ -110,7 +106,7 @@ void forward() {
   digitalWrite(LEFT_B, LOW);
   digitalWrite(RIGHT_A, HIGH);
   digitalWrite(RIGHT_B, LOW);
-  delay(1000);      
+  delay(1000);
 }
 void backward() {
   analogWrite(EN_L, 255);
@@ -143,7 +139,7 @@ void forward_left(){
   digitalWrite(LEFT_A, HIGH);
   digitalWrite(LEFT_B, LOW);
   delay(1000);
-} 
+}
 void left_forward() {
   analogWrite(EN_L, 50);
   analogWrite(EN_R, 200);
@@ -210,5 +206,11 @@ void right_backward() {
 void stop() {
   analogWrite(3,0);
   analogWrite(9,0);
-  delay(2000);
+  delay(1000);
+}
+void reset() {
+  digitalWrite(LEFT_A, LOW);
+  digitalWrite(LEFT_B, LOW);
+  digitalWrite(RIGHT_A, LOW);
+  digitalWrite(RIGHT_B, LOW);
 }

@@ -1,13 +1,16 @@
 import requests, json
 from flask import jsonify
 
-assist_URL = 'http://192.168.0.2:3333/aaron'
-serial_URL = 'http://192.168.0.2:3333/checking'
-bToSerial_URL = 'http://192.168.0.5:4444/bbb'
+assist_URL = 'http://192.168.1.4:3333/aaron'
+#assist_URL = 'http://localhost:3333/aaron'
+serial_URL = 'http://192.168.1.4:3333/checking'
+#serial_URL = 'http://localhost:3333/checking'
+bToSerial_URL = 'http://192.168.1.5:4444/bbb'
+#bToSerial_URL = 'http://localhost:4444/bbb'
 
 def assist_A():
 
-    data = {"code_num": 306}
+    data = {"code_num": 312}
     print("AA")
     res = requests.post(assist_URL, data=json.dumps(data))
     print(res.text)

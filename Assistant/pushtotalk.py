@@ -37,7 +37,7 @@ except (SystemError, ImportError):
     import browser_helpers
     import device_helpers
 
-A_URL = "http://localhost:3333"
+A_URL = 'http://192.168.1.4:3333/aaron'
 
 ASSISTANT_API_ENDPOINT = 'embeddedassistant.googleapis.com'
 END_OF_UTTERANCE = embedded_assistant_pb2.AssistResponse.END_OF_UTTERANCE
@@ -134,13 +134,13 @@ class SampleAssistant(object):
                 self.conversation_stream.stop_recording()
 
             if resp.speech_results:
-                #print(resp.speech_results)
+                # print(resp.speech_results)
                 logging.info('Transcript of user request: "%s".',
                              ' '.join(r.transcript
                                       for r in resp.speech_results))
                 print('Transcript of user request: "%s".',
-                             ' '.join(r.transcript
-                                      for r in resp.speech_results))
+                      ' '.join(r.transcript
+                               for r in resp.speech_results))
 
             if len(resp.audio_out.audio_data) > 0:
                 if not self.conversation_stream.playing:
@@ -179,7 +179,6 @@ class SampleAssistant(object):
             logging.info('Waiting for device executions to complete.')
             print('Waiting for device executions to complete.')
             concurrent.futures.wait(device_actions_futures)
-
 
         logging.info('Finished playing assistant response.')
         print('Finished playing assistant response.')
@@ -261,11 +260,11 @@ class SampleAssistant(object):
 @click.option('--input-audio-file', '-i',
               metavar='<input file>',
               help='Path to input audio file. '
-              'If missing, uses audio capture')
+                   'If missing, uses audio capture')
 @click.option('--output-audio-file', '-o',
               metavar='<output file>',
               help='Path to output audio file. '
-              'If missing, uses audio playback')
+                   'If missing, uses audio playback')
 @click.option('--audio-sample-rate',
               default=audio_helpers.DEFAULT_AUDIO_SAMPLE_RATE,
               metavar='<audio sample rate>', show_default=True,
@@ -340,12 +339,12 @@ def main(api_endpoint, credentials, project_id,
         )
     else:
         audio_source = audio_device = (
-            audio_device or audio_helpers.SoundDeviceStream(
-                sample_rate=audio_sample_rate,
-                sample_width=audio_sample_width,
-                block_size=audio_block_size,
-                flush_size=audio_flush_size
-            )
+                audio_device or audio_helpers.SoundDeviceStream(
+            sample_rate=audio_sample_rate,
+            sample_width=audio_sample_width,
+            block_size=audio_block_size,
+            flush_size=audio_flush_size
+        )
         )
     if output_audio_file:
         audio_sink = audio_helpers.WaveSink(
@@ -355,12 +354,12 @@ def main(api_endpoint, credentials, project_id,
         )
     else:
         audio_sink = audio_device = (
-            audio_device or audio_helpers.SoundDeviceStream(
-                sample_rate=audio_sample_rate,
-                sample_width=audio_sample_width,
-                block_size=audio_block_size,
-                flush_size=audio_flush_size
-            )
+                audio_device or audio_helpers.SoundDeviceStream(
+            sample_rate=audio_sample_rate,
+            sample_width=audio_sample_width,
+            block_size=audio_block_size,
+            flush_size=audio_flush_size
+        )
         )
     # Create conversation stream with the given audio source and sink.
     conversation_stream = audio_helpers.ConversationStream(
@@ -391,8 +390,8 @@ def main(api_endpoint, credentials, project_id,
                               'when registering a device instance.')
                 sys.exit(-1)
             device_base_url = (
-                'https://%s/v1alpha2/projects/%s/devices' % (api_endpoint,
-                                                             project_id)
+                    'https://%s/v1alpha2/projects/%s/devices' % (api_endpoint,
+                                                                 project_id)
             )
             device_id = str(uuid.uuid1())
             payload = {
@@ -419,32 +418,27 @@ def main(api_endpoint, credentials, project_id,
         logging.info("Direction status : " + direction)
         print("Direction status : " + direction)
         if direction == "앞으로":
-            print("응답: 앞으로 갑니다")
-            data = {'code_num': 312}
-            #logging("응답: 앞으로 갑니다")
+            data = {"code_num": 312}
+            res = requests.post(A_URL, data=json.dumps(data))
         elif direction == "뒤":
-            print("응답: 뒤로 갑니다")
-            data = {'code_num': 306}
-            #logging("응답: 뒤로 갑니다")
+            res = data = {"code_num": 306}
+            requests.post(A_URL, data=json.dumps(data))
         elif direction == "좌":
-            print("응답: 왼쪽으로 갑니다")
-            data = {'code_num': 309}
-            #logging("응답: 왼쪽으로 갑니다")
+            data = {"code_num": 309}
+            requests.post(A_URL, data=json.dumps(data))
         elif direction == "우":
-            print("응답: 오른쪽으로 갑니다")
-            data = {'code_num': 303}
-            #logging("응답: 오른쪽으로 갑니다")
+            data = {"code_num": 303}
+            requests.post(A_URL, data=json.dumps(data))
         else:
-            print("응답: 미인식")
             data = {"code_num": 777}
-            #logging("응답: 미인식")
-        requests.post(A_URL, data=json.dumps(data))
+            requests.post(A_URL, data=json.dumps(data))
+
         print("ASSISTANT requests FINISH")
         """
         add requests module on here.
         <POST> with direction parameter.
         """
-        
+
     @device_handler.command('actions.intent.TEXT')
     def maa(val):
         print("val is : " + val)
